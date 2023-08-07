@@ -1,4 +1,8 @@
-﻿namespace AppA
+﻿using AppA.Models;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+
+namespace AppA
 {
     public partial class MainPage : ContentPage
     {
@@ -11,14 +15,10 @@
 
         private void OnCounterClicked(object sender, EventArgs e)
         {
-            count++;
+           HttpClient client = new HttpClient();
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+           string json = client.GetStringAsync("https://dummyjson.com/products").Result;
+           ProductVM products = JsonConvert.DeserializeObject<ProductVM>(json);
         }
     }
 }
