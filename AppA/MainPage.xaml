@@ -1,50 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage 
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
              x:Class="AppA.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+    <StackLayout Padding="20">
+        <Label Text="Tic Tac Toe" FontSize="24" HorizontalOptions="CenterAndExpand" Margin="0,0,0,20"/>
+        <Grid x:Name="GameGrid" ColumnSpacing="0" RowSpacing="0">
+            
+            <!-- Rows and Columns representing the Tic Tac Toe grid -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <!--<Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />-->
+            <!-- Cells representing the individual Tic Tac Toe cells -->
+            <Button x:Name="Cell00" Grid.Row="0" Grid.Column="0" Clicked="OnCellClicked"/>
+            <Button x:Name="Cell01" Grid.Row="0" Grid.Column="1" Clicked="OnCellClicked"/>
+            <Button x:Name="Cell02" Grid.Row="0" Grid.Column="2" Clicked="OnCellClicked"/>
 
-            <Label
-                Text="ISS Tracker"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+            <Button x:Name="Cell10" Grid.Row="1" Grid.Column="0" Clicked="OnCellClicked"/>
+            <Button x:Name="Cell11" Grid.Row="1" Grid.Column="1" Clicked="OnCellClicked"/>
+            <Button x:Name="Cell12" Grid.Row="1" Grid.Column="2" Clicked="OnCellClicked"/>
 
-            <Label
-                Text="Click Button to start stream"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
-            <Label
-                x:Name="Label3"
-                Text=" "
-                SemanticProperties.HeadingLevel="Level3"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-
-
-        </VerticalStackLayout>
-    </ScrollView>
-
+            <Button x:Name="Cell20" Grid.Row="2" Grid.Column="0" Clicked="OnCellClicked"/>
+            <Button x:Name="Cell21" Grid.Row="2" Grid.Column="1" Clicked="OnCellClicked"/>
+            <Button x:Name="Cell22" Grid.Row="2" Grid.Column="2" Clicked="OnCellClicked"/>
+        </Grid>
+    </StackLayout>
 </ContentPage>

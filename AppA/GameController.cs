@@ -27,6 +27,7 @@ namespace AppA
             }
             catch (Exception)
             {
+                // Handle errors and return appropriate response
                 return false;
             }
         }
@@ -34,10 +35,47 @@ namespace AppA
     public class Game
     {
         public string GameId { get; }
+        public char[,] Board { get; private set; } // Represents the game board
+
+        public char CurrentPlayer { get; private set; } = 'X'; // Current player ('X' or 'O')
 
         public Game(string gameId)
         {
             GameId = gameId;
+            Board = new char[3, 3];
+            InitializeBoard();
+        }
+
+        private void InitializeBoard()
+        {
+            for (int row = 0; row < 3; row++)
+            {
+                for (int col = 0; col < 3; col++)
+                {
+                    Board[row, col] = '\0'; // Initialize the board cells
+                }
+            }
+        }
+
+        public bool MakeMove(int row, int col)
+        {
+            if (row < 0 || row >= 3 || col < 0 || col >= 3)
+                return false; // Invalid move
+
+            if (Board[row, col] == '\0')
+            {
+                Board[row, col] = CurrentPlayer;
+                SwitchPlayer();
+                return true; // Move successfully made
+            }
+
+            return false; // Cell already occupied
+        }
+
+        private void SwitchPlayer()
+        {
+            CurrentPlayer = (CurrentPlayer == 'X') ? 'O' : 'X'; // Toggle players
         }
     }
+
 }
