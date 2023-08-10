@@ -23,18 +23,19 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
+            <Button Clicked="HandleCellClicked" />
             <!-- Cells representing the individual Tic Tac Toe cells -->
-            <Button x:Name="Cell00" Grid.Row="0" Grid.Column="0" Clicked="OnCellClicked"/>
-            <Button x:Name="Cell01" Grid.Row="0" Grid.Column="1" Clicked="OnCellClicked"/>
-            <Button x:Name="Cell02" Grid.Row="0" Grid.Column="2" Clicked="OnCellClicked"/>
+            <Button x:Name="Cell00" Grid.Row="0" Grid.Column="0" Clicked="HandleCellClicked"/>
+            <Button x:Name="Cell01" Grid.Row="0" Grid.Column="1" Clicked="HandleCellClicked"/>
+            <Button x:Name="Cell02" Grid.Row="0" Grid.Column="2" Clicked="HandleCellClicked"/>
 
-            <Button x:Name="Cell10" Grid.Row="1" Grid.Column="0" Clicked="OnCellClicked"/>
-            <Button x:Name="Cell11" Grid.Row="1" Grid.Column="1" Clicked="OnCellClicked"/>
-            <Button x:Name="Cell12" Grid.Row="1" Grid.Column="2" Clicked="OnCellClicked"/>
+            <Button x:Name="Cell10" Grid.Row="1" Grid.Column="0" Clicked="HandleCellClicked"/>
+            <Button x:Name="Cell11" Grid.Row="1" Grid.Column="1" Clicked="HandleCellClicked"/>
+            <Button x:Name="Cell12" Grid.Row="1" Grid.Column="2" Clicked="HandleCellClicked"/>
 
-            <Button x:Name="Cell20" Grid.Row="2" Grid.Column="0" Clicked="OnCellClicked"/>
-            <Button x:Name="Cell21" Grid.Row="2" Grid.Column="1" Clicked="OnCellClicked"/>
-            <Button x:Name="Cell22" Grid.Row="2" Grid.Column="2" Clicked="OnCellClicked"/>
+            <Button x:Name="Cell20" Grid.Row="2" Grid.Column="0" Clicked="HandleCellClicked"/>
+            <Button x:Name="Cell21" Grid.Row="2" Grid.Column="1" Clicked="HandleCellClicked"/>
+            <Button x:Name="Cell22" Grid.Row="2" Grid.Column="2" Clicked="HandleCellClicked"/>
         </Grid>
     </StackLayout>
 </ContentPage>

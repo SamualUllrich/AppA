@@ -35,14 +35,27 @@ namespace AppA
     public class Game
     {
         public string GameId { get; }
-        public char[,] Board { get; private set; } // Represents the game board
+        private char[,] board = new char[3, 3]; // Represents the game board
 
         public char CurrentPlayer { get; private set; } = 'X'; // Current player ('X' or 'O')
 
+        public bool MakeMove(int row, int col, char player)
+        {
+            if (row < 0 || row >= 3 || col < 0 || col >= 3)
+                return false; // Invalid move
+
+            if (board[row, col] == '\0')
+            {
+                board[row, col] = player;
+                return true; // Move successfully made
+            }
+
+            return false; // Cell already occupied
+        }
         public Game(string gameId)
         {
             GameId = gameId;
-            Board = new char[3, 3];
+            board = new char[3, 3];
             InitializeBoard();
         }
 
@@ -52,7 +65,7 @@ namespace AppA
             {
                 for (int col = 0; col < 3; col++)
                 {
-                    Board[row, col] = '\0'; // Initialize the board cells
+                    board[row, col] = '\0'; // Initialize the board cells
                 }
             }
         }
@@ -62,9 +75,9 @@ namespace AppA
             if (row < 0 || row >= 3 || col < 0 || col >= 3)
                 return false; // Invalid move
 
-            if (Board[row, col] == '\0')
+            if (board[row, col] == '\0')
             {
-                Board[row, col] = CurrentPlayer;
+                board[row, col] = CurrentPlayer;
                 SwitchPlayer();
                 return true; // Move successfully made
             }

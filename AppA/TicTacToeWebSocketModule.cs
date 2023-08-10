@@ -1,13 +1,19 @@
 ﻿using EmbedIO.WebSockets;
+using System.Net.WebSockets;
 using System.Text;
 
 namespace AppA
 {
     public class TicTacToeWebSocketModule : WebSocketModule
     {
-        public TicTacToeWebSocketModule(string urlPath)
+        private readonly Game game;
+        private readonly WebSocketService webSocketService;
+
+        public TicTacToeWebSocketModule(string urlPath, Game gameInstance, WebSocketService webSocketServiceInstance)
             : base(urlPath, true)
         {
+            game = gameInstance;
+            webSocketService = webSocketServiceInstance;
         }
 
         protected override Task OnMessageReceivedAsync(
@@ -15,30 +21,45 @@ namespace AppA
             byte[] rxBuffer,
             IWebSocketReceiveResult rxResult)
         {
-            // Handle the received message
             string message = Encoding.UTF8.GetString(rxBuffer);
-            // Implement your logic to handle the received message
+
+
+            var moveParts = message.Split(',');
+            if (moveParts.Length == 2 && int.TryParse(moveParts[0], out int row) && int.TryParse(moveParts[1], out int col))
+            {
+                char playerSymbol = 'X';
+                bool isValidMove = game.MakeMove(row, col, playerSymbol);
+
+                if (isValidMove)
+                {
+                    // Broadcast the move to other players
+                    BroadcastAsync(message, c => c != context);
+                }
+                else
+                {
+                    // Inform the player that the move is invalid
+                    SendAsync(context, "Invalid move. Try again.");
+                }
+
+            }
+
             return Task.CompletedTask;
         }
 
-        protected override Task OnClientConnectedAsync(IWebSocketContext context)
+        protected override async Task OnClientConnectedAsync(IWebSocketContext context)
         {
-            // Handle client connection
-            // For example, send a welcome message to the client
-            return SendAsync(context, "Welcome to the Tic Tac Toe game!");
+            await SendAsync(context, "Welcome to the Tic Tac Toe game!");
         }
 
-        protected override Task OnClientDisconnectedAsync(IWebSocketContext context)
+        protected override async Task OnClientDisconnectedAsync(IWebSocketContext context)
         {
-            // Handle client disconnection
-            // For example, notify other players that someone left
-            return Task.CompletedTask;
+            await SendToOthersAsync(context, "A player has left the game.");
         }
 
-        private Task SendToOthersAsync(IWebSocketContext context, string payload)
+        private async Task SendToOthersAsync(IWebSocketContext context, string payload)
         {
-            // Broadcast the payload to all connected clients except the given context
-            return BroadcastAsync(payload, c => c != context);
+            await BroadcastAsync(payload, c => c != context);
         }
     }
+    
 }
