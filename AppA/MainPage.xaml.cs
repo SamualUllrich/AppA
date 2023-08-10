@@ -15,10 +15,14 @@ namespace AppA
 
         private void OnCounterClicked(object sender, EventArgs e)
         {
-           HttpClient client = new HttpClient();
+            count++;
 
-           string json = client.GetStringAsync("https://dummyjson.com/products").Result;
-           ProductVM products = JsonConvert.DeserializeObject<ProductVM>(json);
+            if (count == 1)
+                CounterBtn.Text = $"Clicked {count} time";
+            else
+                CounterBtn.Text = $"Clicked {count} times";
+
+            SemanticScreenReader.Announce(CounterBtn.Text);
         }
     }
 }
